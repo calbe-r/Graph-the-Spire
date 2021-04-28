@@ -17,19 +17,20 @@ app.get('/',(req,res)=>{
 app.post('/json', (req,res) =>  {
 
 	let sampleFile;
+	let uploadPath;
 	
 	if(!req.files || Object.keys(req.files).length === 0) {
 		return res.status(400).send('No Files were uploaded.')
 	}
 	
 	sampleFile = req.files.sampleFile;
-	console.log(sampleFile);
+	console.log(sampleFile.name);
+	uploadPath = __dirname + '/json/' + sampleFile.name;
 
-	sampleFile.mv(path.join(__dirname, 'json', sampleFile.name), (err) => {
+
+	sampleFile.mv(uploadPath, (err) => {
 		if (err)
-			return res.status(500).send(err);
-			
-		res.sendFile(uploadPath);
+			return res.status(500).send(err);	
 	});
 });
 

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/calbe-r/STS#readme",
   "dependencies": {
+    "chart.js": "^3.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "mongoose": "^5.12.5",
