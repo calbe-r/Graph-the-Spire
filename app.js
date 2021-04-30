@@ -4,16 +4,22 @@ const path = require('path');
 const fileUpload = require('express-fileupload');
 const app = express();	
 const mongoose = require('mongoose');
+const fs = require("fs");
+const cors = require('cors');
 
 app.use(fileUpload({
     useTempFiles : true,
     tempFileDir : path.join(__dirname,'tmp'),
 }));
 
+app.use(cors());
+
 app.get('/',(req,res)=>{
 	res.sendFile(path.join(__dirname,'/index.html'));
 });
-
+app.get('/json', (req,res)=>{
+	res.sendFile(path.join(__dirname, '/json/uploaded.json'));
+})
 app.post('/json', (req,res) =>  {
 
 	let sampleFile;
@@ -32,6 +38,9 @@ app.post('/json', (req,res) =>  {
 		if (err)
 			return res.status(500).send(err);	
 	});
+
+	fs.rename('./json/' + sampleFile.name, './json/uploaded.json', ()=>{})
+	res.sendFile(path.join(__dirname,"/index.html"));	
 });
 
 app.listen(3000, () => {})
